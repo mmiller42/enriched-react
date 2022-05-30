@@ -1,0 +1,39 @@
+{
+  "name": "__name__",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "description",
+  "main": "build/cjs/index.js",
+  "module": "build/lib/index.js",
+  "files": [
+    "/build"
+  ],
+  "types": "/build/types/index.d.ts",
+  "repository": "https://github.com/mmiller42/__name__.git",
+  "homepage": "https://github.com/mmiller42/__name__",
+  "author": "mmiller42 <me@mmiller.me>",
+  "license": "MIT",
+  "config": {
+    "source_file_paths": "\"*.{js,json,md}\" \"src/**/*.ts\""
+  },
+  "scripts": {
+    "build": "rimraf build && tsc --project tsconfig.json && babel \"build/esm/index.js\" --out-dir build/cjs && rimraf \"build/types/*.spec.d.ts\" \"build/types/*.spec.d.ts.map\"",
+    "format": "yarn -s _source_file_paths | xargs yarn format:file",
+    "format:file": "prettier --write",
+    "test": "yarn test:format && yarn test:unit",
+    "test:format": "yarn -s _source_file_paths | xargs prettier --check",
+    "test:unit": "ava",
+    "preversion": "yarn build && yarn test",
+    "_source_file_paths": "echo $npm_package_config_source_file_paths"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.7",
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
+    "ava": "^4.0.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "sinon": "^12.0.1",
+    "typescript": "^4.5.4"
+  }
+}
